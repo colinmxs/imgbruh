@@ -1,0 +1,26 @@
+﻿@model imgbruh.Features.Imgs.Create.Command
+<div class="row">
+    <div class="col-md-10">
+        <section id="uploadForm">
+            @using (Html.BeginForm("Create", "Imgs", new { }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Url, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" value="Submit" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
