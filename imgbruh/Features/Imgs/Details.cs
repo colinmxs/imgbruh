@@ -62,7 +62,7 @@ namespace imgbruh.Features.Imgs
                 return new Model
                 {
                     Id = img.Id,
-                    CodeName = img.CodeName,
+                    CodeName = img.LookupId,
                     Url = img.Url,
                     Ratings = ratings
                 };

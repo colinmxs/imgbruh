@@ -113,7 +113,7 @@ namespace imgbruh.Features.Imgs
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var command = (Create.Command)filterContext.ActionParameters["command"];
-            var reservedNames = _context.Imgs.Select(i => i.CodeName).ToArray();
+            var reservedNames = _context.Imgs.Select(i => i.LookupId).ToArray();
             _name = _nameGenerator.GenerateUnique(reservedNames);
             command.Name = _name;
         }

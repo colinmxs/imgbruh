@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.Attributes;
+using imgbruh.Infrastructure;
 using imgbruh.Models;
 using MediatR;
 using System;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace imgbruh.Features.Imgs
 {
@@ -12,33 +14,34 @@ namespace imgbruh.Features.Imgs
         [Validator(typeof(Validator))]
         public class Command : SignableCommand, IAsyncRequest
         {
-            public string Name { get; internal set; }
-            public string Url { get; set; }
+            public string Name { get; set; }
+            public HttpPostedFileBase Image { get; set; }
         }
 
         public class Validator : AbstractValidator<Command>
         {
             public Validator()
             {
-                RuleFor(c => c.Url)
-                    .Must(curl => Uri.IsWellFormedUriString(curl, UriKind.Absolute))
-                    .WithMessage("Urls only, bro ;)");
+                RuleFor(c => c.Image)
+                    .Must(i => i.ContentType == "image/gif" || i.ContentType == "image/jpeg" || i.ContentType == "image/png")
+                    .WithMessage(".gifs, .jpg, and .png only...for now...");
             }
         }
 
         public class Handler : AsyncRequestHandler<Command>
         {
             private readonly imgbruhContext _db;
+            private readonly FileStorage _fs;
 
-            public Handler(imgbruhContext db)
+            public Handler(imgbruhContext db, FileStorage fs)
             {
                 _db = db;
+                _fs = fs;
             }
                         
             protected async override Task HandleCore(Command message)
             {
-                var img = new Img(message.Url, message.Name, message.User);
-                _db.Imgs.Add(img);
+                var img = await Img.CreateAsync(message.Image, message.Name, message.User, _fs, _db);
                 await _db.SaveChangesAsync();                
             }
         }

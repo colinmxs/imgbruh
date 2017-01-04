@@ -56,7 +56,7 @@ namespace imgbruh.Features.Imgs
 
                 if(message.SearchString != null)
                 {
-                    imgs.SingleOrDefault(i => i.CodeName == message.SearchString);
+                    imgs.SingleOrDefault(i => i.LookupId == message.SearchString);
                 }
                 else
                 {

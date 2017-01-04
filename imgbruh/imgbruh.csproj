@@ -57,11 +57,35 @@
       <HintPath>..\packages\MediatR.2.1.0\lib\net45\MediatR.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -84,6 +108,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
@@ -156,9 +184,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -215,7 +240,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Features\Imgs\Details.cs" />
     <Compile Include="Features\Imgs\ImgsController.cs" />
-    <Compile Include="Features\NameGenerator\NameGeneratorController.cs" />
     <Compile Include="Infrastructure\Attributes.cs" />
     <Compile Include="Infrastructure\FeatureViewLocationRazorViewEngine.cs" />
     <Compile Include="Features\Account\AccountController.cs" />
@@ -224,6 +248,7 @@
     <Compile Include="Features\Manage\ManageController.cs" />
     <Compile Include="Features\Shared\SignableCommand.cs" />
     <Compile Include="Features\Shared\UserManagerController.cs" />
+    <Compile Include="Infrastructure\FileStorage.cs" />
     <Compile Include="Infrastructure\KernelExtensions.cs" />
     <Compile Include="Infrastructure\Filters.cs" />
     <Compile Include="Infrastructure\HttpContextBaseExtensions.cs" />
@@ -244,6 +269,10 @@
     <Compile Include="Migrations\201611150409088_added-indexes.cs" />
     <Compile Include="Migrations\201611150409088_added-indexes.Designer.cs">
       <DependentUpon>201611150409088_added-indexes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701042058381_modified-imgs.cs" />
+    <Compile Include="Migrations\201701042058381_modified-imgs.Designer.cs">
+      <DependentUpon>201701042058381_modified-imgs.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -270,11 +299,15 @@
     <EmbeddedResource Include="Migrations\201611150409088_added-indexes.resx">
       <DependentUpon>201611150409088_added-indexes.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701042058381_modified-imgs.resx">
+      <DependentUpon>201701042058381_modified-imgs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\NameGeneration\Files\firstnames.csv" />
     <EmbeddedResource Include="Models\NameGeneration\Files\lastnames.csv" />
     <EmbeddedResource Include="Models\NameGeneration\Files\adjectives.csv" />
     <EmbeddedResource Include="Models\NameGeneration\Files\nouns.csv" />
     <Content Include="Features\Shared\_CreatePartial.cshtml" />
+    <None Include="Properties\PublishProfiles\imgbruh - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -327,7 +360,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

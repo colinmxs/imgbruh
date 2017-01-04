@@ -1,6 +1,10 @@
-﻿using imgbruh.Models.NameGeneration;
+﻿using imgbruh.Infrastructure;
+using imgbruh.Models.NameGeneration;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace imgbruh.Models
 {
@@ -16,22 +20,31 @@ namespace imgbruh.Models
         #region constructors
         //private constructor for entity framework
         private Img() { }
-        public Img(string url, string name, ApplicationUser user)
+        private Img(string url, string codeName, ApplicationUser user, string contentType, string fileName, string lookupId)
         {
             Url = url;
             TimeCreatedUtc = DateTime.UtcNow;
-            CodeName = name;
-            if (user.IsAuthenticated)
-            {
-                User = user;
-            }else
+            User = user;
+            ContentType = contentType;
+            FileName = fileName;
+            LookupId = lookupId;
+            CodeName = codeName;
+        }
+        
+        public async static Task<Img> CreateAsync(HttpPostedFileBase image, string codeName, ApplicationUser user, FileStorage fs, imgbruhContext db)
+        {
+            var lookupId = Guid.NewGuid().ToString().Substring(0, 10);
+            if (!user.IsAuthenticated)
             {
                 throw new Exception("Img can only be create by authenticated user. Use user.Authenticate(IPrincipal p) to set the correct flag");
             }
+            var url = await fs.UploadBlobAsync(image.InputStream, lookupId);
+            var img = new Img(url, codeName, user, image.ContentType, image.FileName, lookupId);
+            db.Imgs.Add(img);
+            return img;
         }
         #endregion
         #region properties
-        public string CodeName { get; private set; }
         public string Url
         {
             get
@@ -46,6 +59,7 @@ namespace imgbruh.Models
                     throw new Exception("Invalid Url string: " + value);
             }
         }
+        public string CodeName { get; private set; }
         public DateTime TimeCreatedUtc { get; private set; }
         public virtual ICollection<Rating> Ratings
         {
@@ -67,7 +81,11 @@ namespace imgbruh.Models
                 UserId = value.Id;
                 _user = value;
             }
-        }     
+        }  
+        public string ContentType { get; private set; }   
+        public string FileName { get; private set; }
+        public string LookupId { get; private set; }
+
         #endregion
         #region methods
         public void AddRating(Rating rating)
@@ -77,11 +95,7 @@ namespace imgbruh.Models
         public void AddComment(Comment comment)
         {
             this._comments.Add(comment);
-        }
-        public void ChangeCodeName(NameGenerator nameGenerator)
-        {
-            CodeName = nameGenerator.Generate();
-        }
+        }        
         #endregion
     }
 }
