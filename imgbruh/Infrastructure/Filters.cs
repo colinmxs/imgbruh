@@ -113,9 +113,9 @@ namespace imgbruh.Features.Imgs
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var command = (Create.Command)filterContext.ActionParameters["command"];
-            var reservedNames = _context.Imgs.Select(i => i.LookupId).ToArray();
-            _name = _nameGenerator.GenerateUnique(reservedNames);
-            command.Name = _name;
+            _name = _nameGenerator.Generate();
+            var padding = Guid.NewGuid().ToString().Substring(0, 4);
+            command.Name = _name + padding;
         }
     }
     public class CodeNameRedirectFilter : IActionFilter

@@ -84,7 +84,7 @@ namespace imgbruh.Models.NameGeneration
         {
             var adjectives = StringArrayHelper.GetFromSingleColumnedCsv("adjectives.csv");
             var nouns = StringArrayHelper.GetFromSingleColumnedCsv("nouns.csv");
-            _nameGenerator = NameGenerator.Create(new string[][] { adjectives, nouns, adjectives, nouns });
+            _nameGenerator = NameGenerator.Create(new string[][] { adjectives, nouns });
         }        
     }    
 }
