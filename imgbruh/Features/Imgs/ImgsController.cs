@@ -6,7 +6,8 @@ using imgbruh.Infrastructure;
 
 namespace imgbruh.Features.Imgs
 {
-    [imgbruhAuthorize]    
+    [imgbruhAuthorize] 
+    [RoutePrefix("imgs")]
     public class ImgsController : UserManagerController
     {
         #region fields

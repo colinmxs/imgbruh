@@ -128,7 +128,7 @@ namespace imgbruh.Features.Imgs
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            filterContext.Result = new RedirectResult(_command.Name);
+            filterContext.Result = new RedirectResult("imgs/"+_command.Name);
         }
 
         public void OnActionExecuting(ActionExecutingContext filterContext)

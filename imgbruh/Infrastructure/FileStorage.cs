@@ -2,6 +2,7 @@
 {
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Auth;
+    using System;
     using System.Configuration;
     using System.IO;
     using System.Threading.Tasks;
@@ -18,17 +19,28 @@
 
         public async Task<string> UploadBlobAsync(Stream fileStream, string name)
         {
+            //todo: refactor to get rid of this
+#if DEBUG
+            var localStorageConnectionString = ConfigurationManager.AppSettings["localStorageConnection"];
+            var storageAccount = CloudStorageAccount.Parse(localStorageConnectionString);
+            var storageClient = storageAccount.CreateCloudBlobClient();            
+            var defaultContainer = storageClient.GetContainerReference(ConfigurationManager.AppSettings["localStorageDefaultContainer"]);
+            var blob = defaultContainer.GetBlockBlobReference(name);
+            var url = "http://127.0.0.1:10000/devstoreaccount1/default/" + name;
+#else
             var storageCredentials = new StorageCredentials(ResourceName, Key1);
             var storageAccount = new CloudStorageAccount(storageCredentials, EndpointSuffix, true);
             var storageClient = storageAccount.CreateCloudBlobClient();
             var defaultContainer = storageClient.GetContainerReference(DefaultContainer);
             var blob = await defaultContainer.GetBlobReferenceFromServerAsync(name);
-            using (var stream = fileStream)
+            var url = ProtocolPrefix + ResourceName + EndpointSuffix + name;
+#endif
+            using (fileStream)
             {
-                await blob.UploadFromStreamAsync(stream);
+                await blob.UploadFromStreamAsync(fileStream);
             }
-            var url = ProtocolPrefix + ResourceName + EndpointSuffix;
-            return url;
+            
+            return url;            
         }
     }    
 }

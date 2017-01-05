@@ -13,9 +13,6 @@ namespace imgbruh.Models
         #region fields
         private ICollection<Rating> _ratings;
         private ICollection<Comment> _comments;
-        private string _url;
-        private ApplicationUser _user;
-        private string _userId;
         #endregion
         #region constructors
         //private constructor for entity framework
@@ -33,7 +30,7 @@ namespace imgbruh.Models
         
         public async static Task<Img> CreateAsync(HttpPostedFileBase image, string codeName, ApplicationUser user, FileStorage fs, imgbruhContext db)
         {
-            var lookupId = Guid.NewGuid().ToString().Substring(0, 10);
+            var lookupId = Guid.NewGuid().ToString().Substring(0, 8);
             if (!user.IsAuthenticated)
             {
                 throw new Exception("Img can only be create by authenticated user. Use user.Authenticate(IPrincipal p) to set the correct flag");
@@ -47,17 +44,7 @@ namespace imgbruh.Models
         #region properties
         public string Url
         {
-            get
-            {
-                return _url;
-            }
-            private set
-            {
-                if (Uri.IsWellFormedUriString(value, UriKind.Absolute) && (value.EndsWith(".gif") || value.EndsWith(".gifv") || value.EndsWith(".png") || value.EndsWith(".jpg")))
-                    _url = value;
-                else
-                    throw new Exception("Invalid Url string: " + value);
-            }
+            get; private set;
         }
         public string CodeName { get; private set; }
         public DateTime TimeCreatedUtc { get; private set; }
@@ -75,13 +62,8 @@ namespace imgbruh.Models
                 return this._comments ?? (this._comments = new HashSet<Comment>());
             }
         }
-        public string UserId { get { return _userId; } private set { _userId = value; } }  
-        public virtual ApplicationUser User { get { return _user; } private set
-            {
-                UserId = value.Id;
-                _user = value;
-            }
-        }  
+        public string UserId { get; private set; }  
+        public virtual ApplicationUser User { get; private set; }  
         public string ContentType { get; private set; }   
         public string FileName { get; private set; }
         public string LookupId { get; private set; }

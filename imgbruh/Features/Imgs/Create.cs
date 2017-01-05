@@ -41,6 +41,7 @@ namespace imgbruh.Features.Imgs
                         
             protected async override Task HandleCore(Command message)
             {
+
                 var img = await Img.CreateAsync(message.Image, message.Name, message.User, _fs, _db);
                 await _db.SaveChangesAsync();                
             }

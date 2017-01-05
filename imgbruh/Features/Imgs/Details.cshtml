@@ -1,4 +1,4 @@
-﻿@model imgbruh.Models.Img
+﻿@model imgbruh.Features.Imgs.Details.Model
 
 @{
     ViewBag.Title = "Details";
@@ -7,44 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Img</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.User.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CodeName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CodeName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Url)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Url)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TimeCreatedUtc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TimeCreatedUtc)
-        </dd>
-
-    </dl>
+    <h4>@Model.CodeName</h4>
+    <img src="@Model.Url" />
+    <hr />    
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
