@@ -12,6 +12,8 @@ namespace imgbruh.Features.Manage
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public string UserName { get; internal set; }
+        public bool HasEmail { get; internal set; }
     }
 
     public class ManageLoginsViewModel

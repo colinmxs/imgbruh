@@ -30,7 +30,7 @@ namespace imgbruh.Features.Account
             }
         }
 
-
+        #region login
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -69,7 +69,8 @@ namespace imgbruh.Features.Account
                     return View(model);
             }
         }
-
+        #endregion
+        #region verify code
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -112,7 +113,8 @@ namespace imgbruh.Features.Account
                     return View(model);
             }
         }
-
+        #endregion
+        
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -165,7 +167,8 @@ namespace imgbruh.Features.Account
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
-
+        
+        #region password
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
@@ -209,7 +212,6 @@ namespace imgbruh.Features.Account
         {
             return View();
         }
-
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
@@ -251,7 +253,8 @@ namespace imgbruh.Features.Account
         {
             return View();
         }
-
+        #endregion
+        #region third party sign-in
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
@@ -327,6 +330,15 @@ namespace imgbruh.Features.Account
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
+        //
+        // GET: /Account/ExternalLoginFailure
+        [AllowAnonymous]
+        public ActionResult ExternalLoginFailure()
+        {
+            return View();
+        }
+
+        #endregion
 
         //
         // POST: /Account/ExternalLoginConfirmation
@@ -376,14 +388,7 @@ namespace imgbruh.Features.Account
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
-        {
-            return View();
-        }      
-
+      
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

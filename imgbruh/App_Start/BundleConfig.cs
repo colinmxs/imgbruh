@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using System.Web.Optimization.React;
 
 namespace imgbruh
 {
@@ -22,6 +23,12 @@ namespace imgbruh
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/react").Include(
+                      "~/Scripts/react/react.min.js"));
+
+            bundles.Add(new BabelBundle("~/bundles/image-upload").Include(                      
+                      "~/Features/Shared/ImageUpload.jsx"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

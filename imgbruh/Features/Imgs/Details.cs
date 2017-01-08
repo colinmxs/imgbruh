@@ -20,6 +20,7 @@ namespace imgbruh.Features.Imgs
             public int Id { get; set; }
             public string CodeName { get; set; }
             public string Url { get; set; }
+            public string UserName { get; set; }
             public IEnumerable<Rating> Ratings { get; set; }
             public class Rating
             {
@@ -49,7 +50,7 @@ namespace imgbruh.Features.Imgs
                     {
                         UserName = comment.User.UserName,
                         Message = comment.Message,
-                        TimeCreatedUtc = comment.TimeCreatedUtc                                                                                               
+                        TimeCreatedUtc = comment.TimeCreatedUtc                                                                                                                       
                     });
                 }               
 
@@ -64,7 +65,8 @@ namespace imgbruh.Features.Imgs
                     Id = img.Id,
                     CodeName = img.CodeName,
                     Url = img.Url,
-                    Ratings = ratings
+                    Ratings = ratings,
+                    UserName = img.User.UserName
                 };
             }
         }

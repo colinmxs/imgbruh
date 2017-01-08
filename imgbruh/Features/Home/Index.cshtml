@@ -2,8 +2,14 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+<div class="jumbotron jumbotron-fluid">
     <h1>Image Brother</h1>
+    <p>...just another free image hosting service...<sup>*sigh*</sup></p>
+    <hr />
+    @Html.Partial("_CreatePartial")
 </div>
 
-@Html.Partial("_CreatePartial")
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/bundles/image-upload?v=12988271")"></script>
+}
