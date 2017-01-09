@@ -8,7 +8,7 @@ namespace imgbruh
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new ValidatorActionFilter());
+            filters.Add(new ValidatorActionFilter(), 1);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net;
 using System.Web.Mvc;
 
@@ -17,7 +18,15 @@ namespace imgbruh.Infrastructure
                 }
                 else
                 {
-                    throw new Exception("That object is straight wacked, yo!");
+                    var result = new ContentResult();
+                    string content = JsonConvert.SerializeObject(filterContext.Controller.ViewData.ModelState, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+                    result.Content = content;
+                    result.ContentType = "application/json";
+                    filterContext.HttpContext.Response.StatusCode = 400;
+                    filterContext.Result = result;                    
                 }
             }
         }

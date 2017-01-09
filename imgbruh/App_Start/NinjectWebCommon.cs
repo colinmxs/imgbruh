@@ -103,8 +103,8 @@ namespace imgbruh.App_Start
             kernel.Bind<MultiInstanceFactory>().ToMethod(ctx => t => ctx.Kernel.GetAll(t));
 
             //bind filters
-            kernel.BindFilterToAttribute<CreateApplicationUserFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Controller, 1, false);
-            kernel.BindFilterToAttribute<SetApplicationUserFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Controller, 1, true);
+            kernel.BindFilterToAttribute<CreateApplicationUserFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Controller, 2, false).WithPropertyValue("SkipOnInvalidModelState", true);
+            kernel.BindFilterToAttribute<SetApplicationUserFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Controller, 3, true);
             kernel.BindFilterToAttribute<AutoRegistrationFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Action, 5, false);
             kernel.BindFilterToAttribute<AutoSignInFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Action, 10, false);
             kernel.BindFilter<AuthenticateApplicationUserFilter>(System.Web.Mvc.FilterScope.Action, 90).WhenActionMethodHas<SignCommandAttribute>();

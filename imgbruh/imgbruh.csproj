@@ -291,6 +291,7 @@
     <Compile Include="Features\Imgs\Details.cs" />
     <Compile Include="Features\Imgs\ImgsController.cs" />
     <Compile Include="Infrastructure\Attributes.cs" />
+    <Compile Include="Infrastructure\ControllerExtensions.cs" />
     <Compile Include="Infrastructure\FeatureViewLocationRazorViewEngine.cs" />
     <Compile Include="Features\Account\AccountController.cs" />
     <Compile Include="Features\Home\HomeController.cs" />

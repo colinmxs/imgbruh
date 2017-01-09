@@ -3,7 +3,6 @@ using FluentValidation.Attributes;
 using imgbruh.Infrastructure;
 using imgbruh.Models;
 using MediatR;
-using System;
 using System.Threading.Tasks;
 using System.Web;
 

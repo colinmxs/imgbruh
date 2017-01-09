@@ -15,6 +15,7 @@ namespace imgbruh.Features.Imgs
     {
         private readonly INameGenerator _nameGenerator;
         private readonly imgbruhContext _context;
+        public bool SkipOnInvalidModelState { get; set; }
         public CreateApplicationUserFilter(INameGenerator nameGenerator, imgbruhContext context)
         {
             _nameGenerator = nameGenerator;
@@ -23,9 +24,17 @@ namespace imgbruh.Features.Imgs
 
         public void OnAuthentication(AuthenticationContext filterContext)
         {
-            var reservedNames = _context.Users.Select(u => u.UserName).ToArray();
-            var user = ApplicationUser.QuickCreate(_nameGenerator.Generate());
-            filterContext.HttpContext.SetApplicationUser(user);
+            var valid = true;
+            if (SkipOnInvalidModelState)
+            {
+                valid = filterContext.Controller.ViewData.ModelState.IsValid;
+            }
+            if (valid)
+            {
+                var reservedNames = _context.Users.Select(u => u.UserName).ToArray();
+                var user = ApplicationUser.QuickCreate(_nameGenerator.Generate());
+                filterContext.HttpContext.SetApplicationUser(user);
+            }
         }
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)

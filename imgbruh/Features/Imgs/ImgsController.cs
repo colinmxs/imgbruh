@@ -44,10 +44,10 @@ namespace imgbruh.Features.Imgs
         [ValidateAntiForgeryToken]
         [SignCommand]
         [GenerateCodeName]
-        public async Task<string> Create(Create.Command command)
+        public async Task<ActionResult> Create(Create.Command command)
         {
             await _mediator.SendAsync(command);
-            return command.Name;
+            return this.RedirectToActionJson(nameof(Details), new { codeName = command.Name });
         }
 
         //// GET: Imgs
