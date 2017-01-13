@@ -31,7 +31,7 @@ var ImageUpload = React.createClass({
             var token = $('input[name="__RequestVerificationToken"]').val();
             fd.append('__RequestVerificationToken', token);
             $.ajax({
-                url: 'http://localhost/imgbruh/imgs',
+                url: 'http://imgbruh.azurewebsites.net/imgs',
                 data: fd,
                 processData: false,
                 contentType: false,
