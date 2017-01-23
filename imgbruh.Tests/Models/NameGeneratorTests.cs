@@ -13,7 +13,7 @@ namespace imgbruh.Tests.Models
             var array2 = new string[] { "theMan" };
             var array3 = new string[] { "smith" };
             var arrays = new string[][] { array1, array2, array3 };
-            var nameGenerator = NameGenerator.Create(arrays);
+            var nameGenerator = NameGenerator.Create(arrays, "");
 
             var result = nameGenerator.Generate();
             Assert.AreEqual("colintheMansmith", result);
@@ -25,7 +25,7 @@ namespace imgbruh.Tests.Models
             var array1 = new string[] {"aa", "bb", "cc", "dd", "ee" };
             var array2 = new string[] { "ff", "gg", "hh", "ii", "jj" };
             var array3 = new string[] { "ll", "mm", "nn", "oo", "pp" };
-            var usernameGenerator = NameGenerator.Create(new string[][] { array1, array2, array3});
+            var usernameGenerator = NameGenerator.Create(new string[][] { array1, array2, array3}, "");
 
             var totalCombos = array1.Length * array2.Length * array3.Length;
             var reservedUsernames = new string[totalCombos];

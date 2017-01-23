@@ -27,7 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
     <ApplicationInsightsResourceId>/subscriptions/220c9c02-762f-4416-947d-2fa13fe27fdc/resourcegroups/imgbruh/providers/microsoft.insights/components/imgbruh</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/220c9c02-762f-4416-947d-2fa13fe27fdc/resourcegroups/imgbruh/providers/microsoft.insights/components/imgbruh</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
@@ -334,6 +334,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Features\Rate\RatingsController.cs" />
+    <Compile Include="Features\Rate\Submit.cs" />
     <Compile Include="Infrastructure\AiHandleErrorAttribute.cs" />
     <Compile Include="Features\Imgs\Details.cs" />
     <Compile Include="Features\Imgs\ImgsController.cs" />
@@ -341,7 +343,6 @@
     <Compile Include="Infrastructure\ControllerExtensions.cs" />
     <Compile Include="Infrastructure\FeatureViewLocationRazorViewEngine.cs" />
     <Compile Include="Features\Account\AccountController.cs" />
-    <Compile Include="Features\Home\HomeController.cs" />
     <Compile Include="Features\Imgs\Create.cs" />
     <Compile Include="Features\Manage\ManageController.cs" />
     <Compile Include="Features\Shared\SignableCommand.cs" />
@@ -350,12 +351,12 @@
     <Compile Include="Infrastructure\KernelExtensions.cs" />
     <Compile Include="Infrastructure\Filters.cs" />
     <Compile Include="Infrastructure\HttpContextBaseExtensions.cs" />
+    <Compile Include="Infrastructure\MustRegisterFilter.cs" />
     <Compile Include="Infrastructure\ValidatorActionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Features\Account\AccountViewModels.cs" />
-    <Compile Include="Features\Imgs\Index.cs" />
     <Compile Include="Migrations\201611120746011_init.cs" />
     <Compile Include="Migrations\201611120746011_init.Designer.cs">
       <DependentUpon>201611120746011_init.cs</DependentUpon>
@@ -373,7 +374,6 @@
       <DependentUpon>201701042058381_modified-imgs.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\EntityModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Features\Manage\ManageViewModels.cs" />
@@ -381,7 +381,6 @@
     <Compile Include="Models\imgbruhContext.cs" />
     <Compile Include="Models\NameGeneration\NameGenerator.cs" />
     <Compile Include="Models\NameGeneration\StringArrayHelper.cs" />
-    <Compile Include="Models\Rating.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -404,7 +403,6 @@
     <EmbeddedResource Include="Models\NameGeneration\Files\lastnames.csv" />
     <EmbeddedResource Include="Models\NameGeneration\Files\adjectives.csv" />
     <EmbeddedResource Include="Models\NameGeneration\Files\nouns.csv" />
-    <Content Include="Features\Shared\_CreatePartial.cshtml" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -440,11 +438,13 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Features\Web.config" />
+    <Content Include="Features\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Features\_ViewStart.cshtml" />
     <Content Include="Features\Shared\Error.cshtml" />
     <Content Include="Features\Shared\_Layout.cshtml" />
-    <Content Include="Features\Home\Index.cshtml" />
+    <Content Include="Features\Imgs\Create.cshtml" />
     <Content Include="Features\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Features\Account\ConfirmEmail.cshtml" />
     <Content Include="Features\Account\ExternalLoginConfirmation.cshtml" />
@@ -465,20 +465,16 @@
     <Content Include="Features\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Features\Shared\Lockout.cshtml" />
     <Content Include="Features\Shared\_LoginPartial.cshtml" />
-    <Content Include="Features\Imgs\Create.cshtml" />
     <Content Include="Features\Imgs\Delete.cshtml" />
-    <Content Include="Features\Imgs\Details.cshtml" />
+    <Content Include="Features\Imgs\DetailsAsync.cshtml" />
     <Content Include="Features\Imgs\Edit.cshtml" />
     <Content Include="Features\Imgs\Index.cshtml" />
-    <Content Include="Views\web.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Home\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -496,13 +492,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Features\Shared\ImageUpload.jsx" />
+    <Content Include="Features\Imgs\ImageUpload.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\Imgs\EmotionButton.jsx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -540,6 +539,13 @@
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>C:\windows\system32\inetsrv\appcmd recycle apppool "broncobuddy"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

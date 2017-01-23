@@ -103,17 +103,18 @@ namespace imgbruh.App_Start
             kernel.Bind<MultiInstanceFactory>().ToMethod(ctx => t => ctx.Kernel.GetAll(t));
 
             //bind filters
-            kernel.BindFilterToAttribute<CreateApplicationUserFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Controller, 2, false).WithPropertyValue("SkipOnInvalidModelState", true);
-            kernel.BindFilterToAttribute<SetApplicationUserFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Controller, 3, true);
-            kernel.BindFilterToAttribute<AutoRegistrationFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Action, 5, false);
-            kernel.BindFilterToAttribute<AutoSignInFilter, imgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Action, 10, false);
+            kernel.BindFilterToAttribute<CreateApplicationUserFilter, ImgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Controller, 2, false).WithPropertyValue("SkipOnInvalidModelState", true);
+            kernel.BindFilterToAttribute<SetApplicationUserFilter, ImgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Controller, 3, true);
+            kernel.BindFilterToAttribute<AutoRegistrationFilter, ImgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Action, 5, false);
+            kernel.BindFilterToAttribute<AutoSignInFilter, ImgbruhAuthorizeAttribute>(System.Web.Mvc.FilterScope.Action, 10, false);
             kernel.BindFilter<AuthenticateApplicationUserFilter>(System.Web.Mvc.FilterScope.Action, 90).WhenActionMethodHas<SignCommandAttribute>();
             kernel.BindFilter<SignCommandFilter>(System.Web.Mvc.FilterScope.Action, 100).WhenActionMethodHas<SignCommandAttribute>();
             kernel.BindFilter<CodeNameCommandFilter>(System.Web.Mvc.FilterScope.Action, 100).WhenActionMethodHas<GenerateCodeNameAttribute>();
             kernel.BindFilter<CodeNameRedirectFilter>(System.Web.Mvc.FilterScope.Action, 150).WhenActionMethodHas<RedirectToCodeNameAttribute>();
+            kernel.BindFilter<MustRegisterFilter>(System.Web.Mvc.FilterScope.Action, 200).WhenActionMethodHas<MustRegisterAttribute>();
 
             //bind EF contexts
-            kernel.Bind<imgbruhContext>().ToSelf().InRequestScope();
+            kernel.Bind<ImgbruhContext>().ToSelf().InRequestScope();
 
             //bind identity stuff
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore>();

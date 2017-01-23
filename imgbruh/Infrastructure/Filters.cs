@@ -14,9 +14,9 @@ namespace imgbruh.Features.Imgs
     public class CreateApplicationUserFilter : IAuthenticationFilter
     {
         private readonly INameGenerator _nameGenerator;
-        private readonly imgbruhContext _context;
+        private readonly ImgbruhContext _context;
         public bool SkipOnInvalidModelState { get; set; }
-        public CreateApplicationUserFilter(INameGenerator nameGenerator, imgbruhContext context)
+        public CreateApplicationUserFilter(INameGenerator nameGenerator, ImgbruhContext context)
         {
             _nameGenerator = nameGenerator;
             _context = context;
@@ -43,8 +43,8 @@ namespace imgbruh.Features.Imgs
     }
     public class SetApplicationUserFilter : IAuthenticationFilter
     {
-        private readonly imgbruhContext _dbContext;
-        public SetApplicationUserFilter(imgbruhContext dbContext)
+        private readonly ImgbruhContext _dbContext;
+        public SetApplicationUserFilter(ImgbruhContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -62,9 +62,9 @@ namespace imgbruh.Features.Imgs
     }
     public class AutoRegistrationFilter : IAuthorizationFilter
     {
-        private readonly imgbruhContext _dbContext;
+        private readonly ImgbruhContext _dbContext;
 
-        public AutoRegistrationFilter(imgbruhContext dbContext)
+        public AutoRegistrationFilter(ImgbruhContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -106,10 +106,10 @@ namespace imgbruh.Features.Imgs
     public class CodeNameCommandFilter : IActionFilter
     {
         private readonly INameGenerator _nameGenerator;
-        private readonly imgbruhContext _context;
+        private readonly ImgbruhContext _context;
         private string _name;
 
-        public CodeNameCommandFilter(INameGenerator nameGenerator, imgbruhContext context)
+        public CodeNameCommandFilter(INameGenerator nameGenerator, ImgbruhContext context)
         {
             _nameGenerator = nameGenerator;
             _context = context;
@@ -122,9 +122,8 @@ namespace imgbruh.Features.Imgs
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var command = (Create.Command)filterContext.ActionParameters["command"];
-            _name = _nameGenerator.Generate();
-            var padding = Guid.NewGuid().ToString().Substring(0, 4);
-            command.Name = _name + padding;
+            _name = _nameGenerator.Generate();            
+            command.Name = _name;
         }
     }
     public class CodeNameRedirectFilter : IActionFilter
@@ -159,7 +158,7 @@ namespace imgbruh.Features.Imgs
         {
             var command = filterContext.ActionParameters["command"];
             var signableCommand = (SignableCommand)command;
-            var user = filterContext.HttpContext.GetApplicationUser();
+            var user = filterContext.HttpContext.GetApplicationUser();            
             signableCommand.Sign(user);
             filterContext.ActionParameters["command"] = signableCommand;
         }

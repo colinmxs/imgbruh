@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("imgbruh", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("imgbruh", "Create", "Imgs", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">                
                 @Html.Partial("_LoginPartial")
@@ -32,7 +32,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/react")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)    
+    @RenderSection("scripts", required: false)
+    @Html.ReactInitJavaScript()        
     <script type="text/javascript">
         var appInsights = window.appInsights || function (config) {
             function i(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = "AuthenticatedUserContext", h = "start", c = "stop", l = "Track", a = l + "Event", v = l + "Page", y = u.createElement(o), r, f; y.src = config.url ||

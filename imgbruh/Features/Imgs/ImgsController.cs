@@ -6,8 +6,8 @@ using imgbruh.Infrastructure;
 
 namespace imgbruh.Features.Imgs
 {
-    [imgbruhAuthorize] 
-    [RoutePrefix("imgs")]
+    [ImgbruhAuthorize] 
+    [RoutePrefix("")]
     public class ImgsController : UserManagerController
     {
         #region fields
@@ -33,9 +33,10 @@ namespace imgbruh.Features.Imgs
         }
         #endregion
 
-        // GET: Imgs/Create
+        [Route("")]
         public ActionResult Create()
         {
+            ViewBag.Url = Request.Url;
             return View();
         }
 
@@ -44,22 +45,15 @@ namespace imgbruh.Features.Imgs
         [ValidateAntiForgeryToken]
         [SignCommand]
         [GenerateCodeName]
-        public async Task<ActionResult> Create(Create.Command command)
+        public async Task<ActionResult> CreateAsync(Create.Command command)
         {
             await _mediator.SendAsync(command);
-            return this.RedirectToActionJson(nameof(Details), new { codeName = command.Name });
-        }
-
-        //// GET: Imgs
-        //public async Task<ActionResult> Index()
-        //{
-        //    var imgs = db.Imgs.Include(i => i.User);
-        //    return View(await imgs.ToListAsync());
-        //}
+            return this.RedirectToActionJson(nameof(DetailsAsync), new { codeName = command.Name });
+        }        
 
         // GET: Imgs/Details/5
         [Route("{codename}")]
-        public async Task<ActionResult> Details(string codeName)
+        public async Task<ActionResult> DetailsAsync(string codeName)
         {
             var query = new Details.Query
             {

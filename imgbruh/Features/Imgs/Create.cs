@@ -29,10 +29,10 @@ namespace imgbruh.Features.Imgs
 
         public class Handler : AsyncRequestHandler<Command>
         {
-            private readonly imgbruhContext _db;
+            private readonly ImgbruhContext _db;
             private readonly FileStorage _fs;
 
-            public Handler(imgbruhContext db, FileStorage fs)
+            public Handler(ImgbruhContext db, FileStorage fs)
             {
                 _db = db;
                 _fs = fs;
@@ -40,9 +40,7 @@ namespace imgbruh.Features.Imgs
                         
             protected async override Task HandleCore(Command message)
             {
-
-                var img = await Img.CreateAsync(message.Image, message.Name, message.User, _fs, _db);
-                await _db.SaveChangesAsync();                
+                await Img.CreateAsync(message.Image, message.Name, message.User, _fs, _db);                       
             }
         }
     }

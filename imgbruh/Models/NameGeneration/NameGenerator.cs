@@ -28,16 +28,18 @@ namespace imgbruh.Models.NameGeneration
     {
         private readonly string[][] _subNames;
         private readonly Random _random;
+        private readonly string _separator;
 
-        private NameGenerator(string[][] subNames)
+        private NameGenerator(string[][] subNames, string separator)
         {
             _subNames = subNames;
             _random = new Random();
+            _separator = separator;
         }
 
-        public static NameGenerator Create(string[][] subNames)
+        public static NameGenerator Create(string[][] subNames, string separator)
         {
-            return new NameGenerator(subNames);
+            return new NameGenerator(subNames, separator);
         }
 
         public string Generate()
@@ -52,7 +54,10 @@ namespace imgbruh.Models.NameGeneration
                     name = inner[index];
                 else
                     name += inner[index];
+                name += _separator;
             }
+            if(_separator.Length > 0)
+                return name.Remove(name.Length - _separator.Length);
             return name;
         }
 
@@ -74,7 +79,7 @@ namespace imgbruh.Models.NameGeneration
             var titles = new string[] { "Mister", "Master", "Miss", "Mrs", "Lady", "Sir", "Madam", "Lord", "Dr", "Elder", "Grandpa", "Grandma", "President", "King", "Queen", "Princess", "Aunt", "Uncle" };
             var firstNames = StringArrayHelper.GetFromSingleColumnedCsv("firstnames.csv");
             var lastNames = StringArrayHelper.GetFromSingleColumnedCsv("lastnames.csv");
-            _nameGenerator = NameGenerator.Create(new string[][] { titles, firstNames, lastNames});
+            _nameGenerator = NameGenerator.Create(new string[][] { titles, firstNames, lastNames}, " ");
         }       
     }
     
@@ -82,9 +87,11 @@ namespace imgbruh.Models.NameGeneration
     {
         public CodeNameGenerator()
         {
+            var random = new Random();
             var adjectives = StringArrayHelper.GetFromSingleColumnedCsv("adjectives.csv");
+            var secondNum = new[] { random.Next(9999).ToString() };
             var nouns = StringArrayHelper.GetFromSingleColumnedCsv("nouns.csv");
-            _nameGenerator = NameGenerator.Create(new string[][] { adjectives, nouns });
+            _nameGenerator = NameGenerator.Create(new string[][] { adjectives, secondNum, nouns }, "");
         }        
     }    
 }

@@ -5,14 +5,15 @@ namespace imgbruh.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<imgbruh.Models.imgbruhContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<imgbruh.Models.ImgbruhContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(imgbruh.Models.imgbruhContext context)
+        protected override void Seed(imgbruh.Models.ImgbruhContext context)
         {
             //  This method will be called after migrating to the latest version.
 

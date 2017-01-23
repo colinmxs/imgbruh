@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Principal;
-using System.Collections.Generic;
 using System;
 
 namespace imgbruh.Models
@@ -14,9 +13,6 @@ namespace imgbruh.Models
         private ApplicationUser() { }
         private bool _isAuthenticated = false;
         public bool IsAuthenticated { get { return _isAuthenticated; } }
-        public ICollection<Rating> Ratings { get; private set; }
-        public ICollection<Comment> Comments { get; private set; }
-        public ICollection<Img> Imgs { get; private set; }
         public void Authenticate(IPrincipal principal)
         {
             if (principal.Identity.IsAuthenticated && principal.Identity.GetUserId() == this.Id)
@@ -53,7 +49,7 @@ namespace imgbruh.Models
 
     public class UserStore : UserStore<ApplicationUser>
     {
-        public UserStore(imgbruhContext context) : base(context)
+        public UserStore(ImgbruhContext context) : base(context)
         {
         }
     }   

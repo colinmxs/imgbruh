@@ -41,48 +41,27 @@ namespace imgbruh.Features.Imgs
 
             public static Model Create(Img img)
             {
-                var ratings = new List<Rating>();
-                var comments = new List<Discussion.Comment>();
-
-                foreach (var comment in img.Comments)
-                {
-                    comments.Add(new Discussion.Comment
-                    {
-                        UserName = comment.User.UserName,
-                        Message = comment.Message,
-                        TimeCreatedUtc = comment.TimeCreatedUtc                                                                                                                       
-                    });
-                }               
-
-                //TODO: figure this ish out
-                foreach (var rating in img.Ratings)
-                {
-
-                }
-
                 return new Model
                 {
                     Id = img.Id,
                     CodeName = img.CodeName,
-                    Url = img.Url,
-                    Ratings = ratings,
-                    UserName = img.User.UserName
+                    Url = img.Url
                 };
             }
         }
 
         public class Handler : IAsyncRequestHandler<Query, Model>
         {
-            private readonly imgbruhContext _db;
+            private readonly ImgbruhContext _db;
 
-            public Handler(imgbruhContext db)
+            public Handler(ImgbruhContext db)
             {
                 _db = db;
             }
 
             public async Task<Model> Handle(Query message)
             {
-                var img = await _db.Imgs.Include(i => i.Ratings).Include(i => i.Comments.Select(c => c.User)).SingleOrDefaultAsync(i => i.CodeName == message.CodeName);
+                var img = await _db.Imgs.SingleOrDefaultAsync(i => i.CodeName == message.CodeName);
                 return Model.Create(img);
             }
         }

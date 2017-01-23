@@ -36,7 +36,7 @@ namespace imgbruh
         {
         }
                 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context, imgbruhContext db) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context, ImgbruhContext db) 
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
             // Configure validation logic for usernames

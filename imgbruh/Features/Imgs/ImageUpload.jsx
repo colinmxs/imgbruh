@@ -17,7 +17,7 @@
 
 var ImageUpload = React.createClass({
     getInitialState: function () {
-        return { showProgressBar: false, errorMessage: '' };
+        return { showProgressBar: false, errorMessage: '', url: this.props.url };
     },
     uploadFile: function (e) {
         this.setState({ showProgressBar: true });
@@ -31,7 +31,7 @@ var ImageUpload = React.createClass({
             var token = $('input[name="__RequestVerificationToken"]').val();
             fd.append('__RequestVerificationToken', token);
             $.ajax({
-                url: 'http://imgbruh.azurewebsites.net/imgs',
+                url: this.state.url,
                 data: fd,
                 processData: false,
                 contentType: false,
@@ -41,12 +41,12 @@ var ImageUpload = React.createClass({
                 if (data.redirect) {
                     window.location.href = data.redirect;
                 }
-            }).error(function (data, error) {
+            }).fail(function (data, error) {
                 if (data.status == 400) {
                     me.setState({ errorMessage: 'Bad Request: ' + data.responseJSON.Image.Errors[0].ErrorMessage });
                 }
                 else {
-                    me.setState({ errorMessage: 'An error was encountered. Please try again later.' })
+                    me.setState({ errorMessage: 'An error was encountered. Please try again later.' });
                 }
             }).always(function (data) {
                 me.setState({ showProgressBar: false });
@@ -70,5 +70,3 @@ var ImageUpload = React.createClass({
         );
     }
 });
-
-React.render(<ImageUpload />, document.getElementById('image-upload'))

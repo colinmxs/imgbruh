@@ -14,7 +14,9 @@ namespace imgbruh
             // See http://reactjs.net/ for more information. Example:
             ReactSiteConfiguration.Configuration
                 //.AddScript("~/Scripts/First.jsx")
-                .AddScript("~/Features/Shared/ImageUpload.jsx");
+                .AddScript("~/Features/Imgs/ImageUpload.jsx")
+                //.AddScript("~/Features/Imgs/EmotionButton.jsx")
+                ;
 
             // If you use an external build too (for example, Babel, Webpack,
             // Browserify or Gulp), you can improve performance by disabling 

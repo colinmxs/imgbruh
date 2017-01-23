@@ -2,7 +2,7 @@
 
 namespace imgbruh.Infrastructure
 {
-    public class imgbruhAuthorizeAttribute : Attribute
+    public class ImgbruhAuthorizeAttribute : Attribute
     {
     }
     public class SignCommandAttribute : Attribute
@@ -11,5 +11,8 @@ namespace imgbruh.Infrastructure
     public class GenerateCodeNameAttribute : Attribute
     {
     }
-    public class RedirectToCodeNameAttribute : Attribute { }    
+    public class RedirectToCodeNameAttribute : Attribute
+    {
+    }
+    public class MustRegisterAttribute : Attribute { }    
 }

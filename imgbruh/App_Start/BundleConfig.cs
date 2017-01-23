@@ -25,10 +25,14 @@ namespace imgbruh
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/react").Include(
-                      "~/Scripts/react/react.min.js"));
+                      "~/Scripts/react/react.min.js",
+                      "~/Scripts/react/react-dom.min.js"));
 
             bundles.Add(new BabelBundle("~/bundles/image-upload").Include(                      
-                      "~/Features/Shared/ImageUpload.jsx"));
+                      "~/Features/Imgs/ImageUpload.jsx"));
+
+            //bundles.Add(new BabelBundle("~/bundles/emotion-button").Include(
+            //          "~/Features/Imgs/EmotionButton.jsx"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
