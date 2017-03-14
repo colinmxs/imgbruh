@@ -19,11 +19,16 @@ namespace imgbruh.Features.Imgs
 
         public class Validator : AbstractValidator<Command>
         {
+            const string Message = ".gifs, .jpg, and .png only...for now...";
+            const string Gif = "image/gif";
+            const string Jpeg = "image/jpg";
+            const string Png = "image/png";
+
             public Validator()
             {
                 RuleFor(c => c.Image)
-                    .Must(i => i.ContentType == "image/gif" || i.ContentType == "image/jpeg" || i.ContentType == "image/png")
-                    .WithMessage(".gifs, .jpg, and .png only...for now...");
+                    .Must(i => i.ContentType == Gif || i.ContentType == Jpeg || i.ContentType == Png)
+                    .WithMessage(Message);
             }
         }
 

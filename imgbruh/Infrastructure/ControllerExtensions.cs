@@ -5,6 +5,7 @@ namespace imgbruh.Infrastructure
 {
     public static class ControllerExtensions
     {
+        const string ApplicationJson = "application/json";
         public static ActionResult RedirectToActionJson<TController>(this TController controller, string action, object routeValues)
             where TController : Controller
         {
@@ -21,7 +22,7 @@ namespace imgbruh.Infrastructure
             return new ContentResult
             {
                 Content = serialized,
-                ContentType = "application/json"
+                ContentType = ApplicationJson
             };
         }
     }
