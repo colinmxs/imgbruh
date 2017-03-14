@@ -20,8 +20,6 @@ namespace imgbruh.App_Start
     using System.Linq;
     using System.Reflection;
     using MediatR;
-    using Microsoft.Owin;
-    using Microsoft.Owin.Security;
     using Features.Imgs;
     using Infrastructure;
     using Ninject.Web.Mvc.FilterBindingSyntax;
@@ -76,21 +74,6 @@ namespace imgbruh.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            //bind owin middleware            
-            kernel.Bind<IOwinContext>().ToMethod((context) =>
-            {
-                var cbase = new HttpContextWrapper(HttpContext.Current);
-                var owinContext = cbase.GetOwinContext();
-                return owinContext;
-            });
-
-            kernel.Bind<IAuthenticationManager>().ToMethod((context) =>
-            {
-                var cbase = new HttpContextWrapper(HttpContext.Current);
-                var owinContext = cbase.GetOwinContext();
-                return owinContext.Authentication;
-            });
-
             //mediatr bindings
             kernel.Components.Add<IBindingResolver, ContravariantBindingResolver>();
             kernel.Bind(scan => scan.FromAssemblyContaining<IMediator>().SelectAllClasses().BindDefaultInterface());
@@ -99,7 +82,7 @@ namespace imgbruh.App_Start
             kernel.Bind<MultiInstanceFactory>().ToMethod(ctx => t => ctx.Kernel.GetAll(t));
 
             //bind filters
-            kernel.BindFilter<CodeNameCommandFilter>(System.Web.Mvc.FilterScope.Action, 100).WhenActionMethodHas<GenerateCodeNameAttribute>();
+            //kernel.BindFilter<CodeNameCommandFilter>(System.Web.Mvc.FilterScope.Action, 100).WhenActionMethodHas<GenerateCodeNameAttribute>();
             kernel.BindFilter<CodeNameRedirectFilter>(System.Web.Mvc.FilterScope.Action, 150).WhenActionMethodHas<RedirectToCodeNameAttribute>();
 
             //bind EF contexts

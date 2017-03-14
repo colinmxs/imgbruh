@@ -4,7 +4,7 @@ using System.Data.Entity.Infrastructure.Annotations;
 
 namespace imgbruh.Models
 {
-    public class ImgbruhContext : ApplicationDbContext
+    public class ImgbruhContext : DbContext
     {
         public DbSet<Img> Imgs { get; set; }
 
@@ -23,14 +23,6 @@ namespace imgbruh.Models
                 IndexAnnotation.AnnotationName,
                 new IndexAnnotation(
                     new IndexAttribute("IX_Codename") { IsUnique = true }));
-
-            modelBuilder.Entity<ApplicationUser>()
-                .Property(au => au.UserName)
-                .IsRequired()
-                .HasColumnAnnotation(
-                IndexAnnotation.AnnotationName,
-                new IndexAnnotation(
-                    new IndexAttribute("IX_Username") { IsUnique = true }));
         }
     }
 }

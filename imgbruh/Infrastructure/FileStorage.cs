@@ -16,7 +16,7 @@
         private readonly string Key2 = ConfigurationManager.AppSettings["imgbruh.blob.core:key2"];
         private readonly string DefaultContainer = ConfigurationManager.AppSettings["imgbruh.blob.core:defaultContainer"];
 
-        public async Task UploadBlobAsync(Stream fileStream, string name)
+        public async Task<string> UploadBlobAsync(Stream fileStream, string name)
         {
             //todo: refactor to get rid of this
             //var localStorageConnectionString = ConfigurationManager.AppSettings["localStorageConnection"];
@@ -34,6 +34,7 @@
             {
                 await blob.UploadFromStreamAsync(fileStream);
             }
+            return url;
         }
     }    
 }
