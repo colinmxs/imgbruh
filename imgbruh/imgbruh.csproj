@@ -328,35 +328,24 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Features\Rate\RatingsController.cs" />
-    <Compile Include="Features\Rate\Submit.cs" />
     <Compile Include="Infrastructure\AiHandleErrorAttribute.cs" />
     <Compile Include="Features\Imgs\Details.cs" />
     <Compile Include="Features\Imgs\ImgsController.cs" />
     <Compile Include="Infrastructure\Attributes.cs" />
     <Compile Include="Infrastructure\ControllerExtensions.cs" />
     <Compile Include="Infrastructure\FeatureViewLocationRazorViewEngine.cs" />
-    <Compile Include="Features\Account\AccountController.cs" />
     <Compile Include="Features\Imgs\Create.cs" />
-    <Compile Include="Features\Manage\ManageController.cs" />
-    <Compile Include="Features\Shared\SignableCommand.cs" />
-    <Compile Include="Features\Shared\UserManagerController.cs" />
     <Compile Include="Infrastructure\FileStorage.cs" />
     <Compile Include="Infrastructure\KernelExtensions.cs" />
     <Compile Include="Infrastructure\Filters.cs" />
-    <Compile Include="Infrastructure\HttpContextBaseExtensions.cs" />
-    <Compile Include="Infrastructure\MustRegisterFilter.cs" />
     <Compile Include="Infrastructure\ValidatorActionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Features\Account\AccountViewModels.cs" />
     <Compile Include="Migrations\201611120746011_init.cs" />
     <Compile Include="Migrations\201611120746011_init.Designer.cs">
       <DependentUpon>201611120746011_init.cs</DependentUpon>
@@ -375,12 +364,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EntityModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Features\Manage\ManageViewModels.cs" />
     <Compile Include="Models\Img.cs" />
     <Compile Include="Models\imgbruhContext.cs" />
-    <Compile Include="Models\NameGeneration\NameGenerator.cs" />
-    <Compile Include="Models\NameGeneration\StringArrayHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -399,10 +384,6 @@
     <EmbeddedResource Include="Migrations\201701042058381_modified-imgs.resx">
       <DependentUpon>201701042058381_modified-imgs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Models\NameGeneration\Files\firstnames.csv" />
-    <EmbeddedResource Include="Models\NameGeneration\Files\lastnames.csv" />
-    <EmbeddedResource Include="Models\NameGeneration\Files\adjectives.csv" />
-    <EmbeddedResource Include="Models\NameGeneration\Files\nouns.csv" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -445,27 +426,6 @@
     <Content Include="Features\Shared\Error.cshtml" />
     <Content Include="Features\Shared\_Layout.cshtml" />
     <Content Include="Features\Imgs\Create.cshtml" />
-    <Content Include="Features\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Features\Account\ConfirmEmail.cshtml" />
-    <Content Include="Features\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Features\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Features\Account\ForgotPassword.cshtml" />
-    <Content Include="Features\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Features\Account\Login.cshtml" />
-    <Content Include="Features\Account\Register.cshtml" />
-    <Content Include="Features\Account\ResetPassword.cshtml" />
-    <Content Include="Features\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Features\Account\SendCode.cshtml" />
-    <Content Include="Features\Account\VerifyCode.cshtml" />
-    <Content Include="Features\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Features\Manage\ChangePassword.cshtml" />
-    <Content Include="Features\Manage\Index.cshtml" />
-    <Content Include="Features\Manage\ManageLogins.cshtml" />
-    <Content Include="Features\Manage\SetPassword.cshtml" />
-    <Content Include="Features\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Features\Shared\Lockout.cshtml" />
-    <Content Include="Features\Shared\_LoginPartial.cshtml" />
-    <Content Include="Features\Imgs\Delete.cshtml" />
     <Content Include="Features\Imgs\DetailsAsync.cshtml" />
     <Content Include="Features\Imgs\Edit.cshtml" />
     <Content Include="Features\Imgs\Index.cshtml" />
@@ -499,9 +459,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Features\Imgs\EmotionButton.jsx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -11,7 +11,7 @@ namespace imgbruh.Features.Imgs
     public class Create
     {
         [Validator(typeof(Validator))]
-        public class Command : SignableCommand, IAsyncRequest
+        public class Command : IAsyncRequest
         {
             public string Name { get; set; }
             public HttpPostedFileBase Image { get; set; }
@@ -38,9 +38,10 @@ namespace imgbruh.Features.Imgs
                 _fs = fs;
             }
                         
-            protected async override Task HandleCore(Command message)
+            protected override async Task HandleCore(Command message)
             {
-                await Img.CreateAsync(message.Image, message.Name, message.User, _fs, _db);                       
+                //TODO: plug in name generator
+                await Img.CreateAsync(message.Image, message.Name, "Turtle Lover", _fs, _db);                       
             }
         }
     }

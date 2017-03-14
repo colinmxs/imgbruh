@@ -1,5 +1,4 @@
-﻿
-using imgbruh.Infrastructure;
+﻿using imgbruh.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,7 +38,7 @@ namespace imgbruh.Models
         public string LookupId { get; private set; }
         #endregion        
 
-        public async static Task CreateAsync(HttpPostedFileBase image, string codeName, ApplicationUser user, FileStorage fs, ImgbruhContext db)
+        public static async Task CreateAsync(HttpPostedFileBase image, string codeName, string userName, FileStorage fs, ImgbruhContext db)
         {
             var @event = new ImgCreated(fs, image, codeName, user, db);
             await ApplyAsync(@event);
@@ -50,9 +49,7 @@ namespace imgbruh.Models
             
         }
 
-        
-
-        public async static Task ApplyAsync(AsyncEvent @event)
+        public static async Task ApplyAsync(AsyncEvent @event)
         {
             var handlers = @event._handlers;
             var tasks = new List<Task>();
