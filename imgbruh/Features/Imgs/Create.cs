@@ -19,15 +19,17 @@ namespace imgbruh.Features.Imgs
 
         public class Validator : AbstractValidator<Command>
         {
+            //if it is "...for now..." wtf did i make it constant
             const string Message = ".gifs, .jpg, and .png only...for now...";
             const string Gif = "image/gif";
-            const string Jpeg = "image/jpg";
+            const string Jpg = "image/jpg";
+            const string Jpeg = "image/jpeg";
             const string Png = "image/png";
 
             public Validator()
             {
                 RuleFor(c => c.Image)
-                    .Must(i => i.ContentType == Gif || i.ContentType == Jpeg || i.ContentType == Png)
+                    .Must(i => i.ContentType == Gif || i.ContentType == Jpeg || i.ContentType == Png || i.ContentType == Jpg)
                     .WithMessage(Message);
             }
         }

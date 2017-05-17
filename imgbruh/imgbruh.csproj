@@ -27,7 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
     <ApplicationInsightsResourceId>/subscriptions/220c9c02-762f-4416-947d-2fa13fe27fdc/resourcegroups/imgbruh/providers/microsoft.insights/components/imgbruh</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/220c9c02-762f-4416-947d-2fa13fe27fdc/resourcegroups/imgbruh/providers/microsoft.insights/components/imgbruh</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
