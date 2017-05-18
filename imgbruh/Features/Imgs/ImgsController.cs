@@ -2,10 +2,10 @@
 using System.Web.Mvc;
 using MediatR;
 using imgbruh.Infrastructure;
+using CodenameGenerator;
 
 namespace imgbruh.Features.Imgs
 {
-    [ImgbruhAuthorize] 
     [RoutePrefix("")]
     public class ImgsController : Controller
     {
@@ -30,11 +30,10 @@ namespace imgbruh.Features.Imgs
         [HttpPost]
         [Route("")]
         [ValidateAntiForgeryToken]
-        [GenerateCodeName]
         public async Task<ActionResult> CreateAsync(Create.Command command)
         {
-            await _mediator.SendAsync(command);
-            return this.RedirectToActionJson(nameof(DetailsAsync), new { codeName = command.Name });
+            var name = await _mediator.SendAsync(command);
+            return this.RedirectToActionJson(nameof(DetailsAsync), new { codeName = name });
         }        
 
         [Route("{codename}")]

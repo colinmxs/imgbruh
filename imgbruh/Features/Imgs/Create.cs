@@ -1,19 +1,20 @@
-﻿using FluentValidation;
+﻿using CodenameGenerator;
+using FluentValidation;
 using FluentValidation.Attributes;
 using imgbruh.Infrastructure;
 using imgbruh.Models;
 using MediatR;
 using System.Threading.Tasks;
 using System.Web;
+using System;
 
 namespace imgbruh.Features.Imgs
 {
     public class Create
     {
         [Validator(typeof(Validator))]
-        public class Command : IAsyncRequest
+        public class Command : IAsyncRequest<string>
         {
-            public string Name { get; set; }
             public HttpPostedFileBase Image { get; set; }
         }
 
@@ -34,7 +35,7 @@ namespace imgbruh.Features.Imgs
             }
         }
 
-        public class Handler : AsyncRequestHandler<Command>
+        public class Handler : IAsyncRequestHandler<Command, string>
         {
             private readonly ImgbruhContext _db;
             private readonly FileStorage _fs;
@@ -42,14 +43,20 @@ namespace imgbruh.Features.Imgs
             public Handler(ImgbruhContext db, FileStorage fs)
             {
                 _db = db;
-                _fs = fs;
+                _fs = fs;                
             }
-                        
-            protected override async Task HandleCore(Command message)
+
+            public async Task<string> Handle(Command message)
             {
-                //TODO: plug in name generator
-                await Img.CreateAsync(message.Image, message.Name, "Turtle Lover", _fs, _db);                       
-            }
+                var generator = new Generator("-", Casing.LowerCase);
+                var imgName = generator.Generate();
+                generator.Separator = " ";
+                generator.SetParts(WordBank.FirstNames, WordBank.LastNames);
+                generator.Casing = Casing.PascalCase;
+                var artistName = generator.Generate();
+                await Img.CreateAsync(message.Image, imgName, artistName, _fs, _db);
+                return imgName;
+            }            
         }
     }
 }

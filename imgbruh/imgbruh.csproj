@@ -70,6 +70,9 @@
       <HintPath>..\packages\JavaScriptEngineSwitcher.V8.2.2.0\lib\net45\ClearScript.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CodenameGenerator, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CodenameGenerator.1.2.0\lib\net452\CodenameGenerator.dll</HintPath>
+    </Reference>
     <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
@@ -302,7 +305,6 @@
     <Compile Include="Features\Imgs\Create.cs" />
     <Compile Include="Infrastructure\FileStorage.cs" />
     <Compile Include="Infrastructure\KernelExtensions.cs" />
-    <Compile Include="Infrastructure\Filters.cs" />
     <Compile Include="Infrastructure\ValidatorActionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

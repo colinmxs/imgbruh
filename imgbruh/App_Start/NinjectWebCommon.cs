@@ -83,7 +83,6 @@ namespace imgbruh.App_Start
 
             //bind filters
             //kernel.BindFilter<CodeNameCommandFilter>(System.Web.Mvc.FilterScope.Action, 100).WhenActionMethodHas<GenerateCodeNameAttribute>();
-            kernel.BindFilter<CodeNameRedirectFilter>(System.Web.Mvc.FilterScope.Action, 150).WhenActionMethodHas<RedirectToCodeNameAttribute>();
 
             //bind EF contexts
             kernel.Bind<ImgbruhContext>().ToSelf().InRequestScope();

@@ -32,7 +32,7 @@ namespace imgbruh.Models
         public string CodeName { get; private set; }
         public DateTime TimeCreatedUtc { get; private set; }        
         public string UserId { get; private set; }  
-        public virtual string ArtistName { get; private set; }  
+        public string ArtistName { get; private set; }  
         public string ContentType { get; private set; }   
         public string FileName { get; private set; }
         public string LookupId { get; private set; }

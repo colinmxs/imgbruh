@@ -18,18 +18,18 @@
 
         public async Task<string> UploadBlobAsync(Stream fileStream, string name)
         {
-            //todo: refactor to get rid of this
-            //var localStorageConnectionString = ConfigurationManager.AppSettings["localStorageConnection"];
-            //var storageAccount = CloudStorageAccount.Parse(localStorageConnectionString);
-            //var url = "http://127.0.0.1:10000/devstoreaccount1/default/" + name;
-
-
+#if DEBUG
+            var localStorageConnectionString = ConfigurationManager.AppSettings["localStorageConnection"];
+            var storageAccount = CloudStorageAccount.Parse(localStorageConnectionString);
+            var url = "http://127.0.0.1:10000/devstoreaccount1/default/" + name;
+#else
             var storageCredentials = new StorageCredentials(ResourceName, Key1);
             var storageAccount = new CloudStorageAccount(storageCredentials, null, true);
+            var url = ProtocolPrefix + ResourceName + EndpointSuffix + "/" + DefaultContainer + "/"+ name;
+#endif
             var storageClient = storageAccount.CreateCloudBlobClient();
             var defaultContainer = storageClient.GetContainerReference(DefaultContainer);
             var blob = defaultContainer.GetBlockBlobReference(name);
-            var url = ProtocolPrefix + ResourceName + EndpointSuffix + "/" + DefaultContainer + "/"+ name;
             using (fileStream)
             {
                 await blob.UploadFromStreamAsync(fileStream);
