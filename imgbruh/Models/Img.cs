@@ -38,12 +38,12 @@ namespace imgbruh.Models
         public string LookupId { get; private set; }
         #endregion        
 
-        public static async Task<Img> CreateAsync(HttpPostedFileBase image, string codeName, string artistName, FileStorage fs, ImgbruhContext db)
+        public static async Task<Img> CreateAsync(HttpPostedFileBase image, string codeName, string artistName, FileStorage fs, DataClient dc)
         {
             var lookupId = Guid.NewGuid().ToString().Substring(0, 8);
             var url = await fs.UploadBlobAsync(image.InputStream, lookupId);
             var img = new Img(url, codeName, artistName, image.ContentType, image.FileName, lookupId);
-            db.Imgs.Add(img);
+            //dc.Imgs.Add(img);
             return img;
         }
     }

@@ -37,12 +37,12 @@ namespace imgbruh.Features.Imgs
 
         public class Handler : IAsyncRequestHandler<Command, string>
         {
-            private readonly ImgbruhContext _db;
             private readonly FileStorage _fs;
+            private readonly DataClient _dc;
 
-            public Handler(ImgbruhContext db, FileStorage fs)
+            public Handler(DataClient dc, FileStorage fs)
             {
-                _db = db;
+                _dc = dc;
                 _fs = fs;                
             }
 
@@ -54,7 +54,7 @@ namespace imgbruh.Features.Imgs
                 generator.SetParts(WordBank.FirstNames, WordBank.LastNames);
                 generator.Casing = Casing.PascalCase;
                 var artistName = generator.Generate();
-                await Img.CreateAsync(message.Image, imgName, artistName, _fs, _db);
+                await Img.CreateAsync(message.Image, imgName, artistName, _fs, _dc);
                 return imgName;
             }            
         }
