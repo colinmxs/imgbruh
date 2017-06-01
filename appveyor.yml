@@ -1,0 +1,7 @@
+version: 1.2.{build}
+image: Visual Studio 2017
+branches:
+  only:
+  - master
+skip_commits:
+  message: /\[chore\]/
